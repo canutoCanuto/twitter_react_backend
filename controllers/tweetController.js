@@ -12,13 +12,10 @@ async function index(req, res) {
   //tweetsOfFollowings = await Tweet.find({ author: { $in: userFollowingList } }).populate("author"); // TRAE LOS TWEETS DE GENTE QUE SIGO
   //console.log("LISTA DE TWEETS", tweetsOfFollowings);
   const last100Tweets = await Tweet.find({}).limit(100).populate("author");
-  res.render("home", { last100Tweets, postUser });
+  res.json({ last100Tweets, postUser });
 }
 
-// Display the specified resource.
-async function show(req, res) {}
-
-// Show the form for creating a new resource
+// Store a newly created resource in storage.
 async function store(req, res) {
   const { following } = req.params;
   await new Tweet({
@@ -32,22 +29,13 @@ async function store(req, res) {
   });
 }
 
-// Store a newly created resource in storage.
-async function store(req, res) {}
-
-// Show the form for editing the specified resource.
-async function edit(req, res) {}
-
-// Update the specified resource in storage.
-async function update(req, res) {}
-
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   console.log("ESTOY DESTRUYENDO EL SIGUIENTE TWEET: ", req.params);
   const { id } = req.params;
   await User.updateOne({ _id: req.user }, { $pull: { tweets: { $in: [id] } } });
   await Tweet.findByIdAndRemove({ _id: id });
-  res.redirect("/home");
+  res.status(200).json({ message: "tweet eliminado con éxito" });
 }
 //***************************************************** */
 async function likes(req, res) {
