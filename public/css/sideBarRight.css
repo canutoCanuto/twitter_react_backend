@@ -1,0 +1,21 @@
+.logo2 {
+  width: 1.5rem;
+  filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(179deg) brightness(90%) contrast(83%);
+}
+.logo3 {
+  width: 1rem;
+  filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(179deg) brightness(90%) contrast(83%);
+}
+.sinborde {
+  border: 0;
+  outline: none;
+}
+.fondo-hover {
+}
+.fondo-hover:hover {
+  background-color: rgb(3, 3, 3);
+  cursor: pointer;
+}
+.puntero {
+  cursor: pointer;
+}

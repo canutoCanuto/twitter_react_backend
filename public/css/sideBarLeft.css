@@ -1,0 +1,208 @@
+/*color hover links rgb(47 51 54)
+  color boton nav tweet rgb(29 155 240)  
+*/
+/*General styles*/
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.border-bottom-dark {
+  border-bottom: 1px solid rgb(47 51 54);
+}
+.border-top-dark {
+  border-top: 1px solid rgb(47 51 54);
+}
+.ml-12px {
+  margin-left: 12px;
+}
+.blue-filter-svg {
+  filter: invert(27%) sepia(64%) saturate(3374%) hue-rotate(211deg) brightness(100%) contrast(94%);
+}
+/*Side Bar styles*/
+aside {
+  position: relative;
+}
+
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+nav a {
+  width: 100%;
+  margin-top: 10px;
+}
+a:link,
+a:visited,
+a:active,
+a:hover {
+  text-decoration: none;
+  color: rgb(209, 209, 209);
+}
+a {
+  color: rgb(209, 209, 209);
+}
+#home-icon:hover {
+  background-color: #1da1f2;
+}
+.div-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+}
+.a:hover {
+  display: inline;
+}
+.div-container:hover {
+  background-color: #1b1b1b;
+  transition: 0.3s;
+}
+.div-container-text {
+  font-size: 1.3rem;
+}
+.logo {
+  width: 2rem;
+  filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(179deg) brightness(90%) contrast(83%);
+}
+.logo-small {
+  width: 1rem;
+  filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(179deg) brightness(90%) contrast(83%);
+}
+.btn-tweet {
+  background-color: #1da1f2;
+  margin-top: 5rem;
+  width: 90%;
+}
+.btn-tweet:hover {
+  background-color: #1a92dd;
+}
+.btn-tweet span {
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+}
+/*Section 3 */
+.aside-user-info {
+  display: flex;
+  align-items: flex-end;
+}
+.aside-user-info svg {
+  width: 35%;
+}
+.aside-user-info-container {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.aside-user-info-container:hover {
+  background-color: #1b1b1b;
+  transition: 0.2s;
+}
+img {
+  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+}
+.name {
+  color: rgb(209, 209, 209);
+  font-weight: 500;
+}
+.user {
+  color: rgb(81, 88, 93);
+}
+/*Modal*/
+#modal-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(104, 135, 156, 0.4);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.Modal {
+  border-radius: 16px;
+  width: 32%;
+  height: 35%;
+  background-color: #000;
+}
+#close-modal {
+  height: 15%;
+  display: flex;
+  align-items: center;
+}
+#close-modal span {
+  height: 85%;
+  width: 6%;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+#close-modal span:hover {
+  background-color: #1b1b1b;
+  cursor: pointer;
+}
+
+#close-modal span svg {
+  filter: invert(97%) sepia(0%) saturate(0%) hue-rotate(179deg) brightness(90%) contrast(83%);
+  width: 1.2rem;
+}
+#modal-container img {
+  border-radius: 50%;
+}
+textarea {
+  width: 100%;
+  height: 90%;
+  resize: none;
+  background-color: #000;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 1.3rem;
+}
+.div-send-tweet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-send-tweet {
+  background-color: #1da1f2;
+  color: #fff;
+  font-weight: 500;
+  width: 100%;
+}
+.btn-send-tweet:hover {
+  background-color: #1a92dd;
+  color: #fff;
+}
+.show-modal {
+  display: block;
+}
+.hide-modal {
+  display: none;
+}
+.logOut-container {
+  display: none;
+  box-shadow: rgb(255, 255, 255) 0px 0px 6px 0px, rgb(255, 255, 255) 0px 0px 1px 0px;
+  position: absolute;
+  top: 630px;
+  left: 20px;
+  width: 335px;
+  height: 200px;
+  border-radius: 16px;
+  background-color: #000;
+}
+.div-logOut a {
+  padding-left: 25px;
+}
+.div-logOut a:hover {
+  background-color: rgb(47 51 54);
+}
+.div-logOut a:nth-child(2):hover {
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}

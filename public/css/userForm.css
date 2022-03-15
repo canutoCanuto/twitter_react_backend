@@ -1,0 +1,37 @@
+.logobox {
+  fill: white;
+}
+#box {
+  background-color: rgb(0, 0, 0);
+}
+
+.fondo {
+  background-color: rgb(0, 0, 0);
+}
+.fondo:focus {
+  background-color: rgb(0, 0, 0);
+}
+.labeltext:active {
+  text-decoration: red;
+}
+.nombreapellido {
+  background-color: rgb(0, 0, 0);
+}
+.inputmonth {
+  width: 250px;
+  background-color: rgb(0, 0, 0);
+}
+.inputday {
+  width: 130px;
+  background-color: rgb(0, 0, 0);
+}
+.inputyear {
+  width: 180px;
+  background-color: rgb(0, 0, 0);
+}
+
+.botonsiguiente {
+  height: 50px;
+  margin-top: 100px;
+  margin-bottom: 30px;
+}
