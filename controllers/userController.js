@@ -3,11 +3,6 @@ const Tweet = require("../models/Tweet");
 const passport = require("passport");
 const { format } = require("date-fns");
 
-// verify login.
-const verifyLogin = passport.authenticate("local", {
-  successRedirect: res.status(200).json({ message: "usuario autenticado" }),
-  failureRedirect: res.status(400).json({ message: "error de autenticación" }),
-});
 //Logout
 async function logout(req, res) {
   await req.logout();
@@ -68,16 +63,8 @@ async function toggleFollowings(req, res) {
 // ...
 
 module.exports = {
-  index,
   show,
-  showLogin,
-  verifyLogin,
   logout,
-  create,
   store,
-  edit,
-  update,
-  destroy,
-  showstart,
   toggleFollowings,
 };
