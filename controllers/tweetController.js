@@ -27,6 +27,7 @@ async function store(req, res) {
     if (err) return handleError(err);
     // saved!
   });
+  res.status(200).json({ message: "tweet creado con éxito" });
 }
 
 // Remove the specified resource from storage.
@@ -50,12 +51,12 @@ async function likes(req, res) {
     //console.log("entré al IF");
     await Tweet.updateOne({ _id: req.params.id }, { $push: { likes: req.user } });
 
-    res.redirect("/home");
+    res.status(200).json({ message: "like realizado con éxito" });
   } else {
     //console.log("entré al ELSE");
     await Tweet.updateOne({ _id: req.params.id }, { $pull: { likes: { $in: [req.user] } } });
 
-    res.redirect("/home");
+    res.status(200).json({ message: "dislike realizado con éxito" });
   }
 }
 
@@ -64,11 +65,7 @@ async function likes(req, res) {
 
 module.exports = {
   index,
-  show,
-  //create,
   store,
-  edit,
-  update,
   destroy,
   likes,
 };
