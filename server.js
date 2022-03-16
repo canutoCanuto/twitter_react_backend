@@ -8,7 +8,7 @@ const app = express();
 const mongoose = require("mongoose");
 
 app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 routes(app);
 
