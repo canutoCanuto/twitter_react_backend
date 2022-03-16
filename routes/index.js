@@ -1,9 +1,9 @@
 const publicRoutes = require("./publicRoutes");
 const userRoutes = require("./userRoutes");
-const makeUserAvailableInViews = require("../middlewares/makeUserAvailableInViews");
+const tweetRoutes = require("./tweetRoutes");
 
 module.exports = (app) => {
-  app.use(makeUserAvailableInViews);
   app.use(publicRoutes);
   app.use(userRoutes);
+  app.use(tweetRoutes);
 };

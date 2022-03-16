@@ -46,16 +46,20 @@ async function toggleFollowings(req, res) {
   if (followersList.indexOf(req.user._id) < 0) {
     console.log("entré al IF, NO LO SEGUIA");
     const user = await User.findByIdAndUpdate(req.user, { $push: { following: selectedUser._id } });
-    await User.findByIdAndUpdate(selectedUser._id, { $push: { followers: req.user._id } });
-    res.status(200).json({ user });
+    const followerUser = await User.findByIdAndUpdate(selectedUser._id, {
+      $push: { followers: req.user._id },
+    });
+    res.status(200).json({ user, followerUser });
   } else {
     console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
     const user = await User.findByIdAndUpdate(req.user, {
       $pull: { following: { $in: [selectedUser._id] } },
     });
-    await User.findByIdAndUpdate(selectedUser._id, { $pull: { followers: { $in: [req.user] } } });
+    const unFollowerUser = await User.findByIdAndUpdate(selectedUser._id, {
+      $pull: { followers: { $in: [req.user] } },
+    });
 
-    res.status(200).json({ user });
+    res.status(200).json({ user, unFollowerUser });
   }
 }
 

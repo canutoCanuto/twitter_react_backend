@@ -9,7 +9,7 @@ module.exports = async () => {
   // console.log("[Database] ¡Las tablas fueron creadas!");
 
   // Ejecutar seeders (datos de prueba):
-  /*   await require("./seeders/userSeeder")();
+  await require("./seeders/userSeeder")();
   await require("./seeders/tweetSeeder")();
   //Funcion para agregar seguidos
   async function setFollowings() {
@@ -35,27 +35,7 @@ module.exports = async () => {
     }
   }
 
-  setFollowings(); */
-
-  //******* ESTA MAL ****************************** */
-  /* async function setFollowers() {   //**********  NO SON LOS QUE ESTAN EN LA LISTA DE FOLLOWINGS
-    try {
-      const users = await User.find({});
-      for (user of users) {
-        const { id } = user;
-        const followers = _.sampleSize(users, 3).filter((value) => {
-          if (value.id !== user.id) {
-            return value.id;
-          }
-        });
-        await User.findByIdAndUpdate({ _id: id }, { $push: { followers: followers } });
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  } */
-
-  //setFollowers();
+  setFollowings();
 
   console.log("[Database] ¡Los datos de prueba fueron insertados!");
 };
