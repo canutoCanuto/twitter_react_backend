@@ -3,11 +3,6 @@ const Tweet = require("../models/Tweet");
 const passport = require("passport");
 const { format } = require("date-fns");
 
-//Logout
-async function logout(req, res) {
-  await req.logout();
-  res.status(200).json({ message: "logout ok" });
-}
 // show profile
 async function show(req, res) {
   try {
@@ -21,7 +16,6 @@ async function show(req, res) {
     res.status(404).json({ message: "error" });
   }
 }
-
 // Store a newly created resource in storage.
 async function store(req, res) {
   try {
@@ -33,7 +27,6 @@ async function store(req, res) {
     res.json({ message: "ocurrió un error" });
   }
 }
-
 //************************************************ */
 async function toggleFollowings(req, res) {
   const selectedUser = await User.findById({ _id: req.params.id });
@@ -61,6 +54,11 @@ async function toggleFollowings(req, res) {
 
     res.status(200).json({ user, unFollowerUser });
   }
+}
+//Logout
+async function logout(req, res) {
+  await req.logout();
+  res.status(200).json({ message: "logout ok" });
 }
 
 // Otros handlers...
