@@ -29,56 +29,61 @@ async function store(req, res) {
 }
 //************************************************ */
 async function toggleFollowings(req, res) {
-  const selectedUser = await User.findById({ _id: req.params.id });
-  const followersList = selectedUser.followers;
-  const userId = req.user.sub;
-  /*   console.log(
-    followersList.some((item) => item._id === req.user._id), // RESULTADO FALSE , FINDINDEX -1
-    "POSICION del SOME", // ---> item._id ---> modificación de item a item._id 1/3/21
-  ); */
+  try {
+    const selectedUser = await User.findById({ _id: req.params.id });
+    const followersList = selectedUser.followers;
+    const userId = req.user.sub;
 
-  if (followersList.indexOf(req.user._id) < 0) {
-    console.log("entré al IF, NO LO SEGUIA");
-    const user = await User.findByIdAndUpdate(userId, { $push: { following: selectedUser._id } });
-    const followerUser = await User.findByIdAndUpdate(selectedUser._id, {
-      $push: { followers: userId },
-    });
-    res.status(200).json({ user, followerUser });
-  } else {
-    console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
-    const user = await User.findByIdAndUpdate(userId, {
-      $pull: { following: { $in: [selectedUser._id] } },
-    });
-    const unFollowerUser = await User.findByIdAndUpdate(selectedUser._id, {
-      $pull: { followers: { $in: [userId] } },
-    });
+    if (followersList.indexOf(userId) < 0) {
+      console.log("entré al IF, NO LO SEGUIA");
+      await User.findByIdAndUpdate(userId, { $push: { following: selectedUser._id } });
+      await User.findByIdAndUpdate(selectedUser._id, {
+        $push: { followers: userId },
+      });
+      res.status(200).json({ message: "siguiendo, followings/followers actualizados con éxito" });
+    } else {
+      console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
+      await User.findByIdAndUpdate(userId, {
+        $pull: { following: { $in: [selectedUser._id] } },
+      });
+      await User.findByIdAndUpdate(selectedUser._id, {
+        $pull: { followers: { $in: [userId] } },
+      });
 
-    res.status(200).json({ user, unFollowerUser });
+      res
+        .status(200)
+        .json({ message: "dejaste de seguir, followings/followers actualizados con éxito" });
+    }
+  } catch (error) {
+    res.json({ message: error });
   }
 }
-//Logout
-async function logout(req, res) {
-  await req.logout();
-  res.status(200).json({ message: "logout ok" });
-}
 
-//*************    Generar y borrar token        ************************* */
+//*************    Generar y borrar token    login/logout    ************************* */
 
 async function getToken(req, res) {
-  const user = await User.findOne({ username: req.body.username });
+  try {
+    const user = await User.findOne({ username: req.body.username });
 
-  if (user && (await user.validPassword(req.body.password))) {
-    const token = jwt.sign({ sub: user._id }, process.env.ACCESS_TOKEN_SECRET);
-    await User.updateOne({ _id: user.id }, { $push: { tokens: token } });
-    res.status(200).json({ id: user.id, username: user.username, token: token });
-  } else {
-    res.status(401).json({ message: "error" });
+    if (user && (await user.validPassword(req.body.password))) {
+      const token = jwt.sign({ sub: user._id }, process.env.ACCESS_TOKEN_SECRET);
+      await User.updateOne({ _id: user.id }, { $push: { tokens: token } });
+      res.status(200).json({ id: user.id, username: user.username, token: token });
+    } else {
+      res.status(401).json({ message: "error" });
+    }
+  } catch (error) {
+    res.json({ message: error });
   }
 }
 
 async function deleteToken(req, res) {
-  const user = await User.updateOne({ _id: user.id }, { $pullAll: { tokens: token } });
-  res.status(200).json({ user });
+  try {
+    const user = await User.updateOne({ _id: user.id }, { $pullAll: { tokens: token } });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.json({ message: error });
+  }
 }
 
 // Otros handlers...
@@ -86,7 +91,6 @@ async function deleteToken(req, res) {
 
 module.exports = {
   show,
-  logout,
   store,
   toggleFollowings,
   getToken,

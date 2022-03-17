@@ -9,7 +9,7 @@ tweetRouter.use(checkJwt({ secret: process.env.ACCESS_TOKEN_SECRET, algorithms: 
 tweetRouter.get("/tweets", tweetController.index);
 
 //******    ruta crear tweet ************ */
-tweetRouter.post("/tweets/:id", tweetController.store);
+tweetRouter.post("/tweets", tweetController.store);
 
 //*****   ruta de Likes ***************** */
 tweetRouter.post("/tweets/:id/likes", tweetController.likes);
