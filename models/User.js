@@ -38,6 +38,7 @@ userSchema.methods.toJSON = function () {
   delete user.password;
   return user;
 };
+userSchema.set("toJSON", { virtuals: true });
 
 userSchema.pre("save", async function (next) {
   let user = this;
