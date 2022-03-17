@@ -57,15 +57,16 @@ async function likes(req, res) {
     const selectedTweet = await Tweet.findById({ _id: req.params.id });
     //console.log("tweet id seleccionado", req.params.id);
     const lista = selectedTweet.likes;
+    console.log(lista);
 
-    if (lista.indexOf(req.user._id) < 0) {
-      //console.log("entré al IF");
-      await Tweet.updateOne({ _id: req.params.id }, { $push: { likes: req.user } });
+    if (lista.indexOf(req.user.sub) < 0) {
+      console.log("entré al IF");
+      await Tweet.updateOne({ _id: req.params.id }, { $push: { likes: req.user.sub } });
 
       res.status(200).json({ message: "like realizado con éxito" });
     } else {
       //console.log("entré al ELSE");
-      await Tweet.updateOne({ _id: req.params.id }, { $pull: { likes: { $in: [req.user] } } });
+      await Tweet.updateOne({ _id: req.params.id }, { $pull: { likes: { $in: [req.user.sub] } } });
 
       res.status(200).json({ message: "dislike realizado con éxito" });
     }

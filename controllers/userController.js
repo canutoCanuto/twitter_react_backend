@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Tweet = require("../models/Tweet");
 const { format } = require("date-fns");
 const jwt = require("jsonwebtoken");
+const { findById } = require("../models/User");
 
 // show profile
 async function show(req, res) {
@@ -80,8 +81,13 @@ async function getToken(req, res) {
 
 async function deleteToken(req, res) {
   try {
-    const user = await User.updateOne({ _id: user.id }, { $pullAll: { tokens: token } });
-    res.status(200).json({ user });
+    const tokenBearer = req.headers.authorization.split(" ");
+    token = tokenBearer[1];
+    console.log("TOKEN ", token);
+
+    await User.findByIdAndUpdate(req.user.sub, { $pull: { tokens: token } });
+
+    res.status(200).json({ message: "logout ok" });
   } catch (error) {
     res.json({ message: error });
   }
