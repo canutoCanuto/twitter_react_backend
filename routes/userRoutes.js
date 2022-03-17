@@ -5,6 +5,8 @@ const checkJwt = require("express-jwt");
 const tokenExist = require("../middlewares/tokenExist");
 
 // Rutas del Públicas:
+//*****    ruta crear usuario             ************ */
+userRouter.post("/users", userController.store);
 //*****    Login           ************ */
 userRouter.post("/users/login", userController.getToken);
 //Midlleware para rutas privadas
@@ -13,8 +15,7 @@ userRouter.use(checkJwt({ secret: process.env.ACCESS_TOKEN_SECRET, algorithms: [
 userRouter.use(tokenExist);
 //*****    ruta de user profile           ************ */
 userRouter.get("/users/:username", userController.show);
-//*****    ruta crear usuario             ************ */
-userRouter.post("/users", userController.store);
+
 //*****    ruta de followings - followers ************ */
 userRouter.post("/users/:id/follow", userController.toggleFollowings);
 //*****    logout           ************ */
