@@ -33,6 +33,11 @@ const userSchema = new Schema(
   },
   { timestamps: true },
 );
+userSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
 
 userSchema.pre("save", async function (next) {
   let user = this;

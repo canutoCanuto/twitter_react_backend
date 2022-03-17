@@ -37,13 +37,18 @@ async function store(req, res) {
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   try {
-    console.log("ESTOY DESTRUYENDO EL SIGUIENTE TWEET: ", req.params);
-    const { id } = req.params;
-    await User.updateOne({ _id: req.user }, { $pull: { tweets: { $in: [id] } } });
-    await Tweet.findByIdAndRemove({ _id: id });
-    res.status(200).json({ message: "tweet eliminado con éxito" });
+    const id = req.params.id;
+    const user = await User.findByIdAndUpdate(req.user.sub, { $pull: { tweets: id } });
+
+    if (user) {
+      await Tweet.findByIdAndRemove(id);
+      res.status(200).json({ message: "tweet eliminado con éxito" });
+    } else {
+      res.status(400).json({ message: error });
+    }
   } catch (error) {
-    res.json({ message: error });
+    console.log(error);
+    res.status(500).json({ message: error });
   }
 }
 //***************************************************** */

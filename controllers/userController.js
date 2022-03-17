@@ -66,7 +66,8 @@ async function getToken(req, res) {
     const user = await User.findOne({ username: req.body.username });
 
     if (user && (await user.validPassword(req.body.password))) {
-      const token = jwt.sign({ sub: user._id }, process.env.ACCESS_TOKEN_SECRET);
+      const token = jwt.sign({ sub: user.id }, process.env.ACCESS_TOKEN_SECRET);
+      console.log("token", token);
       await User.updateOne({ _id: user.id }, { $push: { tokens: token } });
       res.status(200).json({ id: user.id, username: user.username, token: token });
     } else {
