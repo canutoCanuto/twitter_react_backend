@@ -83,7 +83,6 @@ async function deleteToken(req, res) {
   try {
     const tokenBearer = req.headers.authorization.split(" ");
     token = tokenBearer[1];
-    console.log("TOKEN ", token);
 
     await User.findByIdAndUpdate(req.user.sub, { $pull: { tokens: token } });
 
