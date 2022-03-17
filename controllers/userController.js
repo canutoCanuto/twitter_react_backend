@@ -64,7 +64,6 @@ async function logout(req, res) {
 //*************    Generar y borrar token        ************************* */
 
 async function getToken(req, res) {
-  console.log(await User.findOne({ username: req.body.username }));
   const user = await User.findOne({ username: req.body.username });
 
   if (user && (await user.validPassword(req.body.password))) {
