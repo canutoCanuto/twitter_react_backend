@@ -31,6 +31,7 @@ async function store(req, res) {
 async function toggleFollowings(req, res) {
   const selectedUser = await User.findById({ _id: req.params.id });
   const followersList = selectedUser.followers;
+  const userId = req.user.sub;
   /*   console.log(
     followersList.some((item) => item._id === req.user._id), // RESULTADO FALSE , FINDINDEX -1
     "POSICION del SOME", // ---> item._id ---> modificación de item a item._id 1/3/21
@@ -38,18 +39,18 @@ async function toggleFollowings(req, res) {
 
   if (followersList.indexOf(req.user._id) < 0) {
     console.log("entré al IF, NO LO SEGUIA");
-    const user = await User.findByIdAndUpdate(req.user, { $push: { following: selectedUser._id } });
+    const user = await User.findByIdAndUpdate(userId, { $push: { following: selectedUser._id } });
     const followerUser = await User.findByIdAndUpdate(selectedUser._id, {
-      $push: { followers: req.user._id },
+      $push: { followers: userId },
     });
     res.status(200).json({ user, followerUser });
   } else {
     console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
-    const user = await User.findByIdAndUpdate(req.user, {
+    const user = await User.findByIdAndUpdate(userId, {
       $pull: { following: { $in: [selectedUser._id] } },
     });
     const unFollowerUser = await User.findByIdAndUpdate(selectedUser._id, {
-      $pull: { followers: { $in: [req.user] } },
+      $pull: { followers: { $in: [userId] } },
     });
 
     res.status(200).json({ user, unFollowerUser });
