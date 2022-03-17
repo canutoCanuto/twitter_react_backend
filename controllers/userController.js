@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Tweet = require("../models/Tweet");
 const { format } = require("date-fns");
+const jwt = require("jsonwebtoken");
 
 // show profile
 async function show(req, res) {
@@ -63,6 +64,7 @@ async function logout(req, res) {
 //*************    Generar y borrar token        ************************* */
 
 async function getToken(req, res) {
+  console.log(await User.findOne({ username: req.body.username }));
   const user = await User.findOne({ username: req.body.username });
 
   if (user && (await user.validPassword(req.body.password))) {
