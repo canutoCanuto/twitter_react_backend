@@ -1,7 +1,6 @@
 const express = require("express");
 const userRouter = express.Router();
 const userController = require("../controllers/userController");
-const tokenController = require("../controllers/tokenController");
 const checkJwt = require("express-jwt");
 
 // Rutas del Públicas:
