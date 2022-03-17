@@ -19,19 +19,19 @@ async function index(req, res) {
   }
 }
 
-// Store a newly created resource in storage. // ***** HACER A NUEVO <<<-----------
+// Store a newly created resource in storage.
 async function store(req, res) {
-  const { following } = req.params;
-  await new Tweet({
-    content: req.body.comment,
-    author: req.user.id,
-    articleId: id,
-  });
-  Tweet.save(function (err) {
-    if (err) return handleError(err);
-    // saved!
-  });
-  res.status(200).json({ message: "tweet creado con éxito" });
+  try {
+    const newTweet = await new Tweet({
+      content: req.body.content,
+      author: req.user.sub,
+    });
+    console.log(newTweet);
+    await newTweet.save();
+    res.status(200).json({ message: "tweet creado con éxito" });
+  } catch (error) {
+    res.json({ message: "ocurrió un error" });
+  }
 }
 
 // Remove the specified resource from storage.
