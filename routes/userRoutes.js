@@ -6,7 +6,7 @@ const checkJwt = require("express-jwt");
 
 // Rutas del Públicas:
 //*****    Login           ************ */
-userRouter.post("/users/login", tokenController.getToken);
+userRouter.post("/users/login", userController.getToken);
 //Midlleware para rutas privadas
 userRouter.use(checkJwt({ secret: process.env.ACCESS_TOKEN_SECRET, algorithms: ["HS256"] }));
 //*****    ruta de user profile           ************ */
@@ -16,6 +16,6 @@ userRouter.post("/users", userController.store);
 //*****    ruta de followings - followers ************ */
 userRouter.post("/users/:id/follow", userController.toggleFollowings);
 //*****    logout           ************ */
-userRouter.post("/users/logout", tokenController.deleteToken);
+userRouter.post("/users/logout", userController.deleteToken);
 
 module.exports = userRouter;
