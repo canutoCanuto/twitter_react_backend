@@ -65,7 +65,7 @@ async function likes(req, res) {
         { _id: req.params.id },
         { $push: { likes: req.user.sub } },
         { returnOriginal: false },
-      );
+      ).populate("author");
 
       res.status(200).json({ upDatedTweet });
     } else {
@@ -74,7 +74,7 @@ async function likes(req, res) {
         { _id: req.params.id },
         { $pull: { likes: { $in: [req.user.sub] } } },
         { returnOriginal: false },
-      );
+      ).populate("author");
 
       res.status(200).json({ upDatedTweet });
     }
