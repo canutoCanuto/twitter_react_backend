@@ -70,7 +70,14 @@ async function getToken(req, res) {
       const token = jwt.sign({ sub: user.id }, process.env.ACCESS_TOKEN_SECRET);
       console.log("token", token);
       await User.updateOne({ _id: user.id }, { $push: { tokens: token } });
-      res.status(200).json({ id: user.id, username: user.username, token: token });
+      res.status(200).json({
+        id: user.id,
+        username: user.username,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        avatar: user.avatar,
+        token: token,
+      });
     } else {
       res.status(401).json({ message: "error" });
     }
