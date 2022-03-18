@@ -56,20 +56,27 @@ async function destroy(req, res) {
 async function likes(req, res) {
   try {
     const selectedTweet = await Tweet.findById({ _id: req.params.id });
-    console.log("tweet id seleccionado", req.params.id);
+    //console.log("tweet id seleccionado", req.params.id);
     const lista = selectedTweet.likes;
-    console.log(lista);
 
     if (lista.indexOf(req.user.sub) < 0) {
-      console.log("entré al IF");
-      await Tweet.updateOne({ _id: req.params.id }, { $push: { likes: req.user.sub } });
+      //console.log("entré al IF");
+      const upDatedTweet = await Tweet.findOneAndUpdate(
+        { _id: req.params.id },
+        { $push: { likes: req.user.sub } },
+        { returnOriginal: false },
+      );
 
-      res.status(200).json({ message: "like realizado con éxito" });
+      res.status(200).json({ upDatedTweet });
     } else {
       //console.log("entré al ELSE");
-      await Tweet.updateOne({ _id: req.params.id }, { $pull: { likes: { $in: [req.user.sub] } } });
+      const upDatedTweet = await Tweet.findOneAndUpdate(
+        { _id: req.params.id },
+        { $pull: { likes: { $in: [req.user.sub] } } },
+        { returnOriginal: false },
+      );
 
-      res.status(200).json({ message: "dislike realizado con éxito" });
+      res.status(200).json({ upDatedTweet });
     }
   } catch (error) {
     res.json({ message: error });
