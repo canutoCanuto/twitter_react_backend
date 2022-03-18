@@ -8,7 +8,7 @@ const { findById } = require("../models/User");
 async function show(req, res) {
   try {
     const postUser = await User.findOne({ username: req.params.username });
-    const tweets = await Tweet.find({ author: postUser._id });
+    const tweets = await Tweet.find({ author: postUser._id }).populate("author");
     const formattedDate = format(postUser.createdAt, "MMMM yyyy");
 
     res.status(200).json({ postUser, formattedDate, tweets });
@@ -19,6 +19,7 @@ async function show(req, res) {
 }
 // Store a newly created resource in storage.
 async function store(req, res) {
+  console.log(req.body);
   try {
     const newUser = new User(req.body);
     await newUser.save();
