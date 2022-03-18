@@ -28,6 +28,7 @@ async function store(req, res) {
     });
     console.log(newTweet);
     await newTweet.save();
+    await User.findByIdAndUpdate(req.user.sub, { $push: { tweets: id } });
     res.status(200).json({ message: "tweet creado con éxito" });
   } catch (error) {
     res.json({ message: "ocurrió un error" });
@@ -55,7 +56,7 @@ async function destroy(req, res) {
 async function likes(req, res) {
   try {
     const selectedTweet = await Tweet.findById({ _id: req.params.id });
-    //console.log("tweet id seleccionado", req.params.id);
+    console.log("tweet id seleccionado", req.params.id);
     const lista = selectedTweet.likes;
     console.log(lista);
 
