@@ -36,28 +36,28 @@ async function toggleFollowings(req, res) {
     const userId = req.user.sub;
 
     if (followersList.indexOf(userId) < 0) {
-      const userLogged = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         userId,
         { $push: { following: selectedUser._id } },
         { returnOriginal: false },
       );
-      const userFollow = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         selectedUser._id,
         {
           $push: { followers: userId },
         },
         { returnOriginal: false },
       );
-      res.status(200).json({ userLogged, userFollow });
+      res.status(200).json({ message: "agregado a followings y a followers" });
     } else {
-      const userLogged = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         userId,
         {
           $pull: { following: { $in: [selectedUser._id] } },
         },
         { returnOriginal: false },
       );
-      const userFollow = await User.findByIdAndUpdate(
+      await User.findByIdAndUpdate(
         selectedUser._id,
         {
           $pull: { followers: { $in: [userId] } },
@@ -65,7 +65,7 @@ async function toggleFollowings(req, res) {
         { returnOriginal: false },
       );
 
-      res.status(200).json({ userLogged, userFollow });
+      res.status(200).json({ message: "eliminado de followings y de followers" });
     }
   } catch (error) {
     res.json({ message: error });
