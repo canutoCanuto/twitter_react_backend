@@ -38,23 +38,37 @@ async function toggleFollowings(req, res) {
 
     if (followersList.indexOf(userId) < 0) {
       console.log("entré al IF, NO LO SEGUIA");
-      await User.findByIdAndUpdate(userId, { $push: { following: selectedUser._id } });
-      await User.findByIdAndUpdate(selectedUser._id, {
-        $push: { followers: userId },
-      });
-      res.status(200).json({ message: "siguiendo, followings/followers actualizados con éxito" });
+      const userLogged = await User.findByIdAndUpdate(
+        userId,
+        { $push: { following: selectedUser._id } },
+        { returnOriginal: false },
+      );
+      const userToFollow = await User.findByIdAndUpdate(
+        selectedUser._id,
+        {
+          $push: { followers: userId },
+        },
+        { returnOriginal: false },
+      );
+      res.status(200).json({ userLogged, userToFollow });
     } else {
       console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
-      await User.findByIdAndUpdate(userId, {
-        $pull: { following: { $in: [selectedUser._id] } },
-      });
-      await User.findByIdAndUpdate(selectedUser._id, {
-        $pull: { followers: { $in: [userId] } },
-      });
+      const userLogged = await User.findByIdAndUpdate(
+        userId,
+        {
+          $pull: { following: { $in: [selectedUser._id] } },
+        },
+        { returnOriginal: false },
+      );
+      const userToUnfollow = await User.findByIdAndUpdate(
+        selectedUser._id,
+        {
+          $pull: { followers: { $in: [userId] } },
+        },
+        { returnOriginal: false },
+      );
 
-      res
-        .status(200)
-        .json({ message: "dejaste de seguir, followings/followers actualizados con éxito" });
+      res.status(200).json({ userLogged, userToUnfollow });
     }
   } catch (error) {
     res.json({ message: error });
