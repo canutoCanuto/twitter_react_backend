@@ -19,7 +19,6 @@ async function show(req, res) {
 }
 // Store a newly created resource in storage.
 async function store(req, res) {
-  console.log(req.body);
   try {
     const newUser = new User(req.body);
     await newUser.save();
@@ -37,7 +36,6 @@ async function toggleFollowings(req, res) {
     const userId = req.user.sub;
 
     if (followersList.indexOf(userId) < 0) {
-      console.log("entré al IF, NO LO SEGUIA");
       const userLogged = await User.findByIdAndUpdate(
         userId,
         { $push: { following: selectedUser._id } },
@@ -52,7 +50,6 @@ async function toggleFollowings(req, res) {
       );
       res.status(200).json({ userLogged, userFollow });
     } else {
-      console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
       const userLogged = await User.findByIdAndUpdate(
         userId,
         {
@@ -83,7 +80,7 @@ async function getToken(req, res) {
 
     if (user && (await user.validPassword(req.body.password))) {
       const token = jwt.sign({ sub: user.id }, process.env.ACCESS_TOKEN_SECRET);
-      console.log("token", token);
+
       await User.updateOne({ _id: user.id }, { $push: { tokens: token } });
       res.status(200).json({
         id: user.id,
