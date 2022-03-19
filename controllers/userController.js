@@ -43,14 +43,14 @@ async function toggleFollowings(req, res) {
         { $push: { following: selectedUser._id } },
         { returnOriginal: false },
       );
-      const userToFollow = await User.findByIdAndUpdate(
+      const userFollow = await User.findByIdAndUpdate(
         selectedUser._id,
         {
           $push: { followers: userId },
         },
         { returnOriginal: false },
       );
-      res.status(200).json({ userLogged, userToFollow });
+      res.status(200).json({ userLogged, userFollow });
     } else {
       console.log("entré al ELSE, YA LO SEGUIA Y AHORA NO");
       const userLogged = await User.findByIdAndUpdate(
@@ -60,7 +60,7 @@ async function toggleFollowings(req, res) {
         },
         { returnOriginal: false },
       );
-      const userToUnfollow = await User.findByIdAndUpdate(
+      const userFollow = await User.findByIdAndUpdate(
         selectedUser._id,
         {
           $pull: { followers: { $in: [userId] } },
@@ -68,7 +68,7 @@ async function toggleFollowings(req, res) {
         { returnOriginal: false },
       );
 
-      res.status(200).json({ userLogged, userToUnfollow });
+      res.status(200).json({ userLogged, userFollow });
     }
   } catch (error) {
     res.json({ message: error });
