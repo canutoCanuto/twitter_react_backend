@@ -9,10 +9,10 @@ module.exports = async () => {
   // console.log("[Database] ¡Las tablas fueron creadas!");
 
   // Ejecutar seeders (datos de prueba):
-  //await require("./seeders/userSeeder")();
-  // await require("./seeders/tweetSeeder")();
+  await require("./seeders/userSeeder")();
+  await require("./seeders/tweetSeeder")();
   //Funcion para agregar seguidos
-  /*   async function setFollowings() {
+  async function setFollowings() {
     try {
       const users = await User.find({});
       for (const user of users) {
@@ -37,5 +37,5 @@ module.exports = async () => {
 
   setFollowings();
 
-  console.log("[Database] ¡Los datos de prueba fueron insertados!"); */
+  console.log("[Database] ¡Los datos de prueba fueron insertados!");
 };

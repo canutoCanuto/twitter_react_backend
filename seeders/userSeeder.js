@@ -14,7 +14,7 @@ module.exports = async () => {
       email: faker.internet.email(),
       password: 123,
       description: faker.lorem.sentence(1),
-      avatar: faker.image.imageUrl(),
+      avatar: `${faker.image.imageUrl()}?random=${Math.round(Math.random() * 1000)}`,
       tweets: [],
       following: [],
       followers: [],
