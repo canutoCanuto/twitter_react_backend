@@ -2,7 +2,6 @@ const User = require("../models/User");
 const Tweet = require("../models/Tweet");
 const { format } = require("date-fns");
 const jwt = require("jsonwebtoken");
-const { findById } = require("../models/User");
 
 // show profile
 async function show(req, res) {
@@ -76,7 +75,9 @@ async function toggleFollowings(req, res) {
 
 async function getToken(req, res) {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({
+      $or: [{ username: req.body.username }, { email: req.body.email }],
+    });
 
     if (user && (await user.validPassword(req.body.password))) {
       const token = jwt.sign({ sub: user.id }, process.env.ACCESS_TOKEN_SECRET);
