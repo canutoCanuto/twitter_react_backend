@@ -25,7 +25,7 @@ async function store(req, res) {
     res.status(200).json({ message: "usuario creado" });
   } catch (error) {
     console.log(error);
-    res.json({ message: "ocurrió un error" });
+    res.status(400).json({ message: "ocurrió un error" });
   }
 }
 //************************************************ */
@@ -68,7 +68,7 @@ async function toggleFollowings(req, res) {
       res.status(200).json({ message: "eliminado de followings y de followers" });
     }
   } catch (error) {
-    res.json({ message: error });
+    res.status(400).json({ message: error });
   }
 }
 
@@ -94,7 +94,7 @@ async function getToken(req, res) {
       res.status(401).json({ message: "error" });
     }
   } catch (error) {
-    res.json({ message: error });
+    res.status(400).json({ message: error });
   }
 }
 
@@ -107,7 +107,7 @@ async function deleteToken(req, res) {
 
     res.status(200).json({ message: "logout ok" });
   } catch (error) {
-    res.json({ message: error });
+    res.status(400).json({ message: error });
   }
 }
 

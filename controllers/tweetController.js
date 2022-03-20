@@ -15,7 +15,7 @@ async function index(req, res) {
     const last100Tweets = await Tweet.find({}).limit(100).populate("author");
     res.status(200).json({ last100Tweets, postUser });
   } catch (error) {
-    res.json({ message: error });
+    res.status(400).json({ message: error });
   }
 }
 
@@ -29,9 +29,9 @@ async function store(req, res) {
     console.log(newTweet);
     await newTweet.save();
     await User.findByIdAndUpdate(req.user.sub, { $push: { tweets: newTweet.id } });
-    res.status(200).json({ message: "tweet creado con éxito" });
+    res.status(200).json({ message: "Tweet posted successfully" });
   } catch (error) {
-    res.json({ message: "ocurrió un error" });
+    res.status(400).json({ message: "There was an error" });
   }
 }
 
@@ -43,7 +43,7 @@ async function destroy(req, res) {
 
     if (user) {
       await Tweet.findByIdAndRemove(id);
-      res.status(200).json({ message: "tweet eliminado con éxito" });
+      res.status(200).json({ message: "Tweet deleted successfully" });
     } else {
       res.status(400).json({ message: error });
     }
@@ -79,7 +79,7 @@ async function likes(req, res) {
       res.status(200).json({ upDatedTweet });
     }
   } catch (error) {
-    res.json({ message: error });
+    res.status(400).json({ message: error });
   }
 }
 
