@@ -25,10 +25,12 @@ async function store(req, res) {
       author: req.user.sub,
     });
     console.log(newTweet);
-    await newTweet.save().populate("author");
-    await User.findByIdAndUpdate(req.user.sub, { $push: { tweets: newTweet.id } });
-    res.status(200).json(newTweet);
+    await newTweet.save();
+    const newTweet2 = await newTweet.populate("author");
+    const user = await User.findByIdAndUpdate(req.user.sub, { $push: { tweets: newTweet.id } });
+    res.status(200).json(newTweet2);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "There was an error" });
   }
 }
