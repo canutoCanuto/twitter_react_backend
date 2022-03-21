@@ -5,15 +5,13 @@ const { roundToNearestMinutesWithOptions } = require("date-fns/fp");
 // Display a listing of the resource.
 async function index(req, res) {
   try {
-    //const postUser = await User.findById(req.user).populate("tweets").populate("following");
-    // la línea 7 trae sus propios Tweets, no los de las personas que sigue.
     const postUser = req.user;
-    const userFollowingList = postUser.following;
-    //console.log("LISTA DE IDs", userFollowingList);
-    //tweetsOfFollowings = await Tweet.find({ author: { $in: userFollowingList } }).populate("author"); // TRAE LOS TWEETS DE GENTE QUE SIGO
-    //console.log("LISTA DE TWEETS", tweetsOfFollowings);
-    const last100Tweets = await Tweet.find({}).limit(100).populate("author");
-    res.status(200).json({ last100Tweets, postUser });
+    const { following } = await User.findById(req.user.sub, { following: 1 }); //Followings usuario logueado
+    const tweetsFollowings = await Tweet.find({ author: { $in: following } }).populate("author"); //Tweets followings usuario logueado
+    const last100Tweets = await Tweet.find({}).limit(100).populate("author"); //Tweets aleatorios
+    console.log(tweetsFollowings);
+
+    res.status(200).json({ tweetsFollowings, last100Tweets, postUser });
   } catch (error) {
     res.status(400).json({ message: error });
   }
