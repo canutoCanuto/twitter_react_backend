@@ -8,7 +8,7 @@ module.exports = async () => {
   mongoose.connect(process.env.DB_CONNECTION_STRING);
   // console.log("[Database] ¡Las tablas fueron creadas!");
 
-  /* // Ejecutar seeders (datos de prueba):
+  // Ejecutar seeders (datos de prueba):
   await require("./seeders/userSeeder")();
   await require("./seeders/tweetSeeder")();
   //Funcion para agregar seguidos
@@ -16,7 +16,7 @@ module.exports = async () => {
     try {
       const users = await User.find({});
       for (const user of users) {
-        const followings = _.sampleSize(users, 3).filter((value) => {
+        const followings = _.sampleSize(users, 10).filter((value) => {
           if (value.id !== user.id) {
             return value.id;
           }
@@ -35,7 +35,7 @@ module.exports = async () => {
     }
   }
 
-  setFollowings(); */
+  setFollowings();
 
   console.log("[Database] ¡Los datos de prueba fueron insertados!");
 };

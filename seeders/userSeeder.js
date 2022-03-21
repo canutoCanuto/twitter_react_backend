@@ -6,12 +6,16 @@ faker.locale = "es";
 module.exports = async () => {
   const users = [];
   User.collection.drop();
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 150; i++) {
+    const [firstname] = removeAccents(faker.name.firstName()).split(" ");
+    const [lastname] = removeAccents(faker.name.lastName()).split(" ");
+    const [, email] = faker.internet.email().split("@");
+
     users.push({
-      firstname: faker.name.firstName(),
-      lastname: faker.name.lastName(),
-      username: faker.internet.userName(),
-      email: faker.internet.email(),
+      firstname,
+      lastname,
+      username: firstname + lastname + Math.round(Math.random() * 100),
+      email: firstname + "@" + email,
       password: 123,
       description: faker.lorem.sentence(1),
       avatar: `${faker.image.imageUrl()}?random=${Math.round(Math.random() * 1000)}`,
@@ -23,4 +27,7 @@ module.exports = async () => {
 
   await User.create(users);
   console.log("[Database] Se corrió el seeder de Usuarios.");
+};
+const removeAccents = (str) => {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };

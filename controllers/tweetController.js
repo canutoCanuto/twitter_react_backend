@@ -9,7 +9,6 @@ async function index(req, res) {
     const { following } = await User.findById(req.user.sub, { following: 1 }); //Followings usuario logueado
     const tweetsFollowings = await Tweet.find({ author: { $in: following } }).populate("author"); //Tweets followings usuario logueado
     const last100Tweets = await Tweet.find({}).limit(100).populate("author"); //Tweets aleatorios
-    console.log(tweetsFollowings);
 
     res.status(200).json({ tweetsFollowings, last100Tweets, postUser });
   } catch (error) {
