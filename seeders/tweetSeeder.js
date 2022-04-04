@@ -10,7 +10,7 @@ module.exports = async () => {
     const tweets = [];
     Tweet.collection.drop();
     const usersid = await User.find({}, "_id");
-    for (let i = 0; i < 600; i++) {
+    for (let i = 0; i < 50; i++) {
       const randomUser = _.sample(usersid);
       const newtweet = new Tweet({
         content: faker.lorem.sentence(10),

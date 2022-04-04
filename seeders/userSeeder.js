@@ -6,7 +6,7 @@ faker.locale = "es";
 module.exports = async () => {
   const users = [];
   User.collection.drop();
-  for (let i = 0; i < 150; i++) {
+  for (let i = 0; i < 20; i++) {
     const [firstname] = removeAccents(faker.name.firstName()).split(" ");
     const [lastname] = removeAccents(faker.name.lastName()).split(" ");
     const [, email] = faker.internet.email().split("@");
