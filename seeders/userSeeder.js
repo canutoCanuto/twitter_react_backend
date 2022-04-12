@@ -6,6 +6,20 @@ faker.locale = "es";
 module.exports = async () => {
   const users = [];
   User.collection.drop();
+
+  users.push({
+    firstname: "Admin",
+    lastname: "Admin",
+    username: "admin",
+    email: "admin@admin.com",
+    password: "admin",
+    description: faker.lorem.sentence(1),
+    avatar: `${faker.image.imageUrl()}?random=${Math.round(Math.random() * 1000)}`,
+    tweets: [],
+    following: [],
+    followers: [],
+  });
+
   for (let i = 0; i < 20; i++) {
     const [firstname] = removeAccents(faker.name.firstName()).split(" ");
     const [lastname] = removeAccents(faker.name.lastName()).split(" ");
