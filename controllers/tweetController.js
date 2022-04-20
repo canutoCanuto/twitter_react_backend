@@ -7,8 +7,13 @@ async function index(req, res) {
   try {
     const postUser = req.user;
     const { following } = await User.findById(req.user.sub, { following: 1 }); //Followings usuario logueado
-    const tweetsFollowings = await Tweet.find({ author: { $in: following } }).populate("author"); //Tweets followings usuario logueado
-    const last100Tweets = await Tweet.find({}).limit(100).populate("author"); //Tweets aleatorios
+    const tweetsFollowings = await Tweet.find({ author: { $in: following } })
+      .populate("author")
+      .sort({ createdAt: -1 }); //Tweets followings usuario logueado
+    const last100Tweets = await Tweet.find({})
+      .limit(100)
+      .populate("author")
+      .sort({ createdAt: -1 }); //Tweets aleatorios
 
     res.status(200).json({ tweetsFollowings, last100Tweets, postUser });
   } catch (error) {

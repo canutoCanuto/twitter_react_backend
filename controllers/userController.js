@@ -7,7 +7,9 @@ const jwt = require("jsonwebtoken");
 async function show(req, res) {
   try {
     const postUser = await User.findOne({ username: req.params.username });
-    const tweets = await Tweet.find({ author: postUser._id }).populate("author");
+    const tweets = await Tweet.find({ author: postUser._id })
+      .populate("author")
+      .sort({ createdAt: -1 });
     const formattedDate = format(postUser.createdAt, "MMMM yyyy");
 
     res.status(200).json({ postUser, formattedDate, tweets });
